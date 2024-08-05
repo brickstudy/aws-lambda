@@ -6,6 +6,7 @@ import (
 
 	"github.com/robert-min/aws-lambda/data-catalog/core/domain"
 	"github.com/robert-min/aws-lambda/data-catalog/core/service"
+	"github.com/stretchr/testify/assert"
 )
 
 type MockProjectRepo struct{}
@@ -84,17 +85,13 @@ func TestCompareNameRule(t *testing.T) {
 		// },
 	}
 
+	// TODO : Test code 전체 수정
 	for _, tt := range tests {
 		t.Run(fmt.Sprintf("Path: %s", tt.s3Path.Path), func(t *testing.T) {
 			gotValid, err := cs.CompareNameRule(tt.s3Path)
 
-			if gotValid != tt.wantValid {
-				t.Errorf("CompareNameRule() =: %v, want: %v", gotValid, tt.wantValid)
-			}
-			if err != tt.wantErr {
-				t.Errorf("Error: %v, want: %v", err, tt.wantErr)
-			}
-
+			assert.Equal(t, tt.wantValid, gotValid, "Error valid")
+			assert.Equal(t, tt.wantErr, err, "Error message")
 		})
 	}
 }

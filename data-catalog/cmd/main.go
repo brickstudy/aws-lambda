@@ -21,10 +21,16 @@ func main() {
 	defer db.Close()
 
 	projectRepo := repository.NewProjectRepository(db)
-	result, err := projectRepo.GetListUsers()
+	_, err = projectRepo.GetListUsers()
 	if err != nil {
-		slog.Error("Error to get user list.", "error", err)
+		slog.Error("Error to get project list.", "error", err)
 	}
+	// fmt.Println(result)
 
+	mediaRepo := repository.NewMediaRepository(db)
+	result, err := mediaRepo.GetListMedias()
+	if err != nil {
+		slog.Error("Error to get media list.", "error", err)
+	}
 	fmt.Println(result)
 }

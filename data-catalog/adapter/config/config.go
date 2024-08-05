@@ -7,6 +7,7 @@ import (
 )
 
 type (
+	// Config container
 	Container struct {
 		DB *DB
 	}
@@ -21,6 +22,7 @@ type (
 	}
 )
 
+// Create New Config
 func New() (*Container, error) {
 	err := godotenv.Load()
 	if err != nil {

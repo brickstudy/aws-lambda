@@ -12,5 +12,8 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	mysql.New(config.DB)
+	_, err = mysql.New(config.DB)
+	if err != nil {
+		log.Fatal(err)
+	}
 }

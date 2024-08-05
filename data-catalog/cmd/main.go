@@ -1,12 +1,12 @@
 package main
 
 import (
-	"fmt"
 	"log/slog"
 
 	"github.com/robert-min/aws-lambda/data-catalog/adapter/config"
 	"github.com/robert-min/aws-lambda/data-catalog/adapter/storage/mysql"
 	"github.com/robert-min/aws-lambda/data-catalog/adapter/storage/mysql/repository"
+	"github.com/robert-min/aws-lambda/data-catalog/core/service"
 )
 
 func main() {
@@ -20,17 +20,13 @@ func main() {
 	}
 	defer db.Close()
 
+	// Dependency injection
+	// Check
 	projectRepo := repository.NewProjectRepository(db)
-	_, err = projectRepo.GetListUsers()
-	if err != nil {
-		slog.Error("Error to get project list.", "error", err)
-	}
-	// fmt.Println(result)
-
 	mediaRepo := repository.NewMediaRepository(db)
-	result, err := mediaRepo.GetListMedias()
+	service := service.NewCheckService(projectRepo, mediaRepo)
+	_, err = service.CompareNameRule()
 	if err != nil {
-		slog.Error("Error to get media list.", "error", err)
+		slog.Error("Error to compare name rule.", "error", err)
 	}
-	fmt.Println(result)
 }

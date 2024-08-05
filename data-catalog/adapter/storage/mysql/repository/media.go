@@ -2,7 +2,7 @@ package repository
 
 import (
 	"github.com/robert-min/aws-lambda/data-catalog/adapter/storage/mysql"
-	"github.com/robert-min/aws-lambda/data-catalog/domain"
+	"github.com/robert-min/aws-lambda/data-catalog/core/domain"
 )
 
 type MediaRepository struct {

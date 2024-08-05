@@ -15,5 +15,5 @@ type ProjectRepository interface {
 }
 
 type CheckService interface {
-	CompareNameRule() (bool, error)
+	CompareNameRule(path domain.S3Path) (bool, error)
 }

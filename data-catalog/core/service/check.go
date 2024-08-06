@@ -41,27 +41,27 @@ func (cs CheckService) CompareNameRule(path domain.S3Path) (bool, error) {
 	case "bronze": // silver, gold 규칙 정해지면 수정
 		// 2. check source and category
 		if !isValidMedia(medias, parts[2], parts[len(parts)-1]) {
-			return false, fmt.Errorf("Not match brickas.media")
+			return false, fmt.Errorf("등록되지 않은 매체입니다. brickas.media 테이블을 확인해주세요.")
 		}
 	case "silver", "gold", "mlflow":
 		return true, nil
 	default:
-		return false, fmt.Errorf("Not match layer")
+		return false, fmt.Errorf("등록되지 않은 root 폴더입니다. 관리자에게 문의해주세요.")
 	}
 
 	// 3. check path length
 	if len(parts) < 5 {
-		return false, fmt.Errorf("Invalid path structure. lenth < 8")
+		return false, fmt.Errorf("최소 경로 depth > 5를 만족하지 못합니다. 경로를 확인해주세요.")
 	}
 
 	// 4. check project name
 	if !isValidProject(projects, parts[1]) {
-		return false, fmt.Errorf("Not match brickas.project")
+		return false, fmt.Errorf("등록되지 않은 프로젝트입니다. brickas.project 테이블을 확인해주세요.")
 	}
 
 	// 5. check valid date
 	if !isValidDate(parts[3]) {
-		return false, fmt.Errorf("Not match dateStr format. yyyy-MM-dd")
+		return false, fmt.Errorf("잘못된 날짜 폴더입니다. 날짜 포멧을 확인해주세요. ex. yyyy-MM-dd")
 	}
 
 	return true, nil

@@ -17,3 +17,7 @@ type ProjectRepository interface {
 type CheckService interface {
 	CompareNameRule(path domain.S3Path) (bool, error)
 }
+
+type MessageService interface {
+	SendDiscordMessage(flag bool, path string, err error) error
+}

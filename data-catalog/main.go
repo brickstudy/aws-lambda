@@ -19,7 +19,6 @@ func process(bucket string, object string) {
 		log.Printf("Error to set config. : %v", err)
 	}
 	log.Println("Config loaded successfully")
-	log.Println(config.DB.Username)
 
 	db, err := mysql.New(config.DB)
 	if err != nil {
@@ -32,24 +31,25 @@ func process(bucket string, object string) {
 	// Check
 	projectRepo := repository.NewProjectRepository(db)
 	mediaRepo := repository.NewMediaRepository(db)
-	service := service.NewCheckService(projectRepo, mediaRepo)
+	serviceCheck := service.NewCheckService(projectRepo, mediaRepo)
 
 	path := domain.S3Path{
 		Bucket: bucket,
 		Path:   object,
 	}
 
-	result, err := service.CompareNameRule(path)
+	flag, err := serviceCheck.CompareNameRule(path)
 	if err != nil {
 		log.Printf("Error to compare name rule. : %v", err)
 	}
-	if result {
-		log.Println("!!!!!!! GOOT !!!!!!!")
-	} else {
-		log.Println("XXXXXX Wrong XXXXX")
-	}
+	log.Println("Compare successfully")
 
-	log.Println("Comapre successfully")
+	// send message
+	err = service.SendDiscordMessage(flag, object, err)
+	if err != nil {
+		log.Printf("Error to send message: %v", err)
+	}
+	log.Println("send message")
 }
 
 func HandleRequest(ctx context.Context, s3Event events.S3Event) {
@@ -67,5 +67,11 @@ func HandleRequest(ctx context.Context, s3Event events.S3Event) {
 }
 
 func main() {
+	// _, err := config.New()
+	// if err != nil {
+	// 	log.Printf("Error to set config. : %v", err)
+	// }
+	// log.Println("Config loaded successfully")
+	// service.SendDiscordMessage(true, "hello", nil)
 	lambda.Start(HandleRequest)
 }

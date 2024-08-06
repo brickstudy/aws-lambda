@@ -24,9 +24,13 @@ type (
 
 // Create New Config
 func New() (*Container, error) {
-	err := godotenv.Load()
-	if err != nil {
-		return nil, err
+	// Check deployment type
+	deployment := os.Getenv("DEPLOYMENT")
+	if deployment != "prod" {
+		err := godotenv.Load()
+		if err != nil {
+			return nil, err
+		}
 	}
 
 	db := &DB{

@@ -39,47 +39,47 @@ func TestCompareNameRule(t *testing.T) {
 		wantErr   error
 	}{
 		{
-			s3Path:    domain.S3Path{Bucket: "testbucket", Path: "s3://brickstudy/bronze/project1/source1/2024-08-05/headline_kr.json"},
+			s3Path:    domain.S3Path{Bucket: "brickstudy", Path: "bronze/project1/source1/2024-08-05/headline.json"},
 			wantValid: true,
 			wantErr:   nil,
 		},
 		{
-			s3Path:    domain.S3Path{Bucket: "testbucket", Path: "s3://brickstudy/silver/project1/source1/2024-08-05/headline_kr.json"},
+			s3Path:    domain.S3Path{Bucket: "testbucket", Path: "silver/project1/source1/2024-08-05/headline_kr.json"},
 			wantValid: true,
 			wantErr:   nil,
 		},
 		{
-			s3Path:    domain.S3Path{Bucket: "testbucket", Path: "s3://brickstudy/bronze/source2/project2/2024-08-05/news_kr.json"},
+			s3Path:    domain.S3Path{Bucket: "testbucket", Path: "bronze/source2/project2/2024-08-05/news_kr.json"},
 			wantValid: false,
-			wantErr:   fmt.Errorf("Not match brickas.media"),
+			wantErr:   fmt.Errorf("등록되지 않은 매체입니다. brickas.media 테이블을 확인해주세요."),
 		},
 		// {
-		// 	s3Path:    domain.S3Path{Bucket: "testbucket", Path: "s3://brickstudy/mlflow/source1/project1/2024-08-05/headline_kr.json"},
+		// 	s3Path:    domain.S3Path{Bucket: "testbucket", Path: "mlflow/source1/project1/2024-08-05/headline_kr.json"},
 		// 	wantValid: true,
 		// 	wantErr:   false,
 		// },
 		// {
-		// 	s3Path:    domain.S3Path{Bucket: "testbucket", Path: "s3://brickstudy/invalid/source1/project1/2024-08-05/headline_kr.json"},
+		// 	s3Path:    domain.S3Path{Bucket: "testbucket", Path: "invalid/source1/project1/2024-08-05/headline_kr.json"},
 		// 	wantValid: false,
 		// 	wantErr:   true,
 		// },
 		// {
-		// 	s3Path:    domain.S3Path{Bucket: "testbucket", Path: "s3://brickstudy/bronze/source1/project1/invalid-date/headline_kr.json"},
+		// 	s3Path:    domain.S3Path{Bucket: "testbucket", Path: "bronze/source1/project1/invalid-date/headline_kr.json"},
 		// 	wantValid: false,
 		// 	wantErr:   true,
 		// },
 		// {
-		// 	s3Path:    domain.S3Path{Bucket: "testbucket", Path: "s3://brickstudy/bronze/source1/invalidproject/2024-08-05/headline_kr.json"},
+		// 	s3Path:    domain.S3Path{Bucket: "testbucket", Path: "bronze/source1/invalidproject/2024-08-05/headline_kr.json"},
 		// 	wantValid: false,
 		// 	wantErr:   true,
 		// },
 		// {
-		// 	s3Path:    domain.S3Path{Bucket: "testbucket", Path: "s3://brickstudy/bronze/source1/project1/2024-08-05/invalidcategory_kr.json"},
+		// 	s3Path:    domain.S3Path{Bucket: "testbucket", Path: "bronze/source1/project1/2024-08-05/invalidcategory_kr.json"},
 		// 	wantValid: false,
 		// 	wantErr:   true,
 		// },
 		// {
-		// 	s3Path:    domain.S3Path{Bucket: "testbucket", Path: "s3://brickstudy/bronze/source1/project1/2024-08-05"},
+		// 	s3Path:    domain.S3Path{Bucket: "testbucket", Path: "bronze/source1/project1/2024-08-05"},
 		// 	wantValid: false,
 		// 	wantErr:   true,
 		// },

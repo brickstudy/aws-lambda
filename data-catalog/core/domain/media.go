@@ -9,4 +9,5 @@ type Media struct {
 	Url      string
 	ClientID sql.NullString
 	ClientPW sql.NullString
+	Token    sql.NullString
 }

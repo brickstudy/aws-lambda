@@ -26,7 +26,7 @@ func (mr *MediaRepository) GetListMedias() ([]domain.Media, error) {
 	var medias []domain.Media
 	for rows.Next() {
 		var media domain.Media
-		err := rows.Scan(&media.Idx, &media.Source_, &media.Category, &media.Url, &media.ClientID, &media.ClientPW)
+		err := rows.Scan(&media.Idx, &media.Source_, &media.Category, &media.Url, &media.ClientID, &media.ClientPW, &media.Token)
 		if err != nil {
 			return nil, err
 		}
